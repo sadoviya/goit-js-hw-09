@@ -10,6 +10,9 @@ const refs = {
   minutesField: document.querySelector('[data-minutes]'),
   secondsField: document.querySelector('[data-seconds]'),
   input: document.querySelector('#datetime-picker'),
+  spanValue: document.querySelectorAll('.value'),
+  spanLabel: document.querySelectorAll('.label'),
+  containerChildrenTimes: document.querySelectorAll('.field'),
 };
 
 const options = {
@@ -33,6 +36,7 @@ const options = {
       refs.secondsField.innerHTML = `00`;
     } else {
       refs.startBtn.disabled = false;
+      refs.input.disabled = false;
     }
   },
 };
@@ -68,11 +72,33 @@ refs.startBtn.addEventListener('click', e => {
 
     if (ms < 1000) {
       clearInterval(intervalId);
+      refs.input.disabled = false;
+    } else {
+      refs.input.disabled = true;
+      refs.startBtn.disabled = true;
     }
-
     refs.daysField.innerHTML = `${addLeadingZero(days)}`;
     refs.hoursField.innerHTML = `${addLeadingZero(hours)}`;
     refs.minutesField.innerHTML = `${addLeadingZero(minutes)}`;
     refs.secondsField.innerHTML = `${addLeadingZero(seconds)}`;
   }, 1000);
 });
+
+// Styles
+refs.timerThumb.style.display = 'flex';
+refs.timerThumb.style.gap = '15px';
+
+for (let i = 0; i < refs.spanValue.length; i++) {
+  refs.spanValue[i].style.fontSize = '30px';
+}
+
+for (let i = 0; i < refs.spanLabel.length; i++) {
+  refs.spanLabel[i].style.textTransform = 'uppercase';
+  refs.spanLabel[i].style.fontSize = '13px';
+}
+
+for (let i = 0; i < refs.containerChildrenTimes.length; i++) {
+  refs.containerChildrenTimes[i].style.display = 'flex';
+  refs.containerChildrenTimes[i].style.flexDirection = 'column';
+  refs.containerChildrenTimes[i].style.alignItems = 'center';
+}
